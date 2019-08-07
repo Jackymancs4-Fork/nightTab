@@ -7,6 +7,8 @@ const minifyCSS = require('gulp-csso');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const replace = require('gulp-replace');
+const htmlmin = require('gulp-htmlmin');
+
 const folder = {
   src: {
     root: 'src'
@@ -37,6 +39,7 @@ function html() {
   return src(folder.src.root + '/index.html')
     .pipe(replace(/\<\!\-\-\ css\-block\ \-\-\>([\s\S]*)\<\!\-\-\ end\-css\-block\ \-\-\>/mg, '<link rel="stylesheet" href="css/' + filename.css + '">'))
     .pipe(replace(/\<\!\-\-\ js\-block\ \-\-\>([\s\S]*)\<\!\-\-\ end\-js\-block\ \-\-\>/mg, '<script src="js/' + filename.js + '"></script>'))
+    .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(dest(folder.build.root))
 }
 
